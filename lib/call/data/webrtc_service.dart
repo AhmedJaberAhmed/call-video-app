@@ -24,11 +24,7 @@ class WebRTCService {
   final List<RTCIceCandidate> _pendingCandidates = [];
   bool _remoteDescriptionSet = false;
 
-  // Fires once when the underlying RTCPeerConnection actually reaches the
-  // "connected" state (i.e. media is flowing both ways). CallCubit uses
-  // this to push CallStatus.connected to the database — nothing else in
-  // the app was doing this before, which meant the caller's UI never knew
-  // the call had actually connected.
+ 
   void Function()? onConnected;
   bool _connectedFired = false;
 
@@ -41,12 +37,7 @@ class WebRTCService {
     'iceServers': [
       {'urls': 'stun:stun.l.google.com:19302'},
       {'urls': 'stun:stun1.l.google.com:19302'},
-      // TURN server لازم تضيفه هنا قبل production عشان الشبكات المعقدة (4G/NAT صعبة)
-      // {
-      //   'urls': 'turn:your-turn-server.com:3478',
-      //   'username': 'user',
-      //   'credential': 'pass',
-      // },
+     
     ],
   };
 
