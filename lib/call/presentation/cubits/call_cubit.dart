@@ -124,9 +124,7 @@ class CallCubit extends Cubit<CallState> {
     required String calleeName,
   }) async {
     print('[CallCubit] initiateCall() START callerId=$callerId calleeId=$calleeId isVideo=$isVideo');
-    // Tracks whether initializeCall() succeeded so we know whether to
-    // release the mic/camera if a later step (offer creation, DB insert)
-    // throws. Previously a failure after this point left the stream open.
+     
     var webRtcInitialized = false;
     try {
       emit(CallConnectingState());
@@ -268,14 +266,10 @@ class CallCubit extends Cubit<CallState> {
 
   Future<void> acceptCall(String callId) async {
     print('[CallCubit] acceptCall() START callId=$callId');
-    // Same tracking as initiateCall() — lets us release the mic/camera if
-    // a step after initializeCall() throws.
+
     var webRtcInitialized = false;
     try {
-      // Permission check was missing here before — acceptCall() went
-      // straight to getUserMedia via initializeCall(), which would throw
-      // an unhandled-ish platform exception instead of a clean error
-      // state if mic/camera permission had been denied.
+
       final hasPermissions = await _webRTCService.requestPermissions();
       print('[CallCubit] requestPermissions() returned $hasPermissions');
       if (!hasPermissions) {
