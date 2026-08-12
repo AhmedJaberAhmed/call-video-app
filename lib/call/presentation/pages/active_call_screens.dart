@@ -65,10 +65,7 @@ class _ActiveCallScreenState extends State<ActiveCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Previously this screen had no BlocListener at all, so if the other
-    // side hung up, rejected, or the call errored out while you were
-    // already here, nothing told this screen to close — you'd be stuck
-    // looking at an active call UI with a dead connection.
+   
     return BlocListener<CallCubit, CallState>(
       listener: (context, state) {
         if (_isNavigatingAway) return;
